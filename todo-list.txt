@@ -1,0 +1,2 @@
+[] Rename keystream_generator to keystream_generator_t
+[] Make all functions files with main function static.
