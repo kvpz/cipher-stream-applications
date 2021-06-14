@@ -16,12 +16,12 @@ random_shuffle(tree_t* card_tree, crypto_deck_t* crypto, deck_t* deck)
       int random_card_value = (rand() % 16) + 2; /* any value from 2 to 17 */
 
       tree_node_t * node = get_node(card_tree, random_card_value);
-	    
+            
       if(0 < node->list_of_objects->size) /* Verify node key equals card value requested */
       {
-	deck_push(deck, pop_back_of_list(node->list_of_objects)); /* transfer card from tree to deck */
-	card_assigned = true;
-	++card_counter;
+        deck_push(deck, pop_back_of_list(node->list_of_objects)); /* transfer card from tree to deck */
+        card_assigned = true;
+        ++card_counter;
       }
     } while (false == card_assigned);
   } /* while */
@@ -41,15 +41,15 @@ dealer_must_win(tree_t* card_tree, crypto_deck_t* crypto, deck_t* deck)
       /* and get card with largest value from tree */
       for(int card_value = 17; card_value > 1; --card_value)
       {
-	/* Find card value available in data structure of cards */
-	tree_node_t * node = get_node(card_tree, card_value);
+        /* Find card value available in data structure of cards */
+        tree_node_t * node = get_node(card_tree, card_value);
 
-	if (0 <  node->list_of_objects->size) /* card value found in data structure of cards */
-	{
-	  deck_push(deck, pop_back_of_list(node->list_of_objects)); /* transfer card from tree to deck */
-	  ++card_counter;
-	  break;
-	}
+        if (0 <  node->list_of_objects->size) /* card value found in data structure of cards */
+        {
+          deck_push(deck, pop_back_of_list(node->list_of_objects)); /* transfer card from tree to deck */
+          ++card_counter;
+          break;
+        }
       } /* for */
     }
     else /* if card is not for dealer */
@@ -61,25 +61,25 @@ dealer_must_win(tree_t* card_tree, crypto_deck_t* crypto, deck_t* deck)
       
       do
       {
-	int random_card_value = (rand() % rand_help) + 2; /* any value from 2 to 17 */
+        int random_card_value = (rand() % rand_help) + 2; /* any value from 2 to 17 */
 
-	tree_node_t * node = get_node(card_tree, random_card_value);
-	    
-	if(0 < node->list_of_objects->size) /* Verify node key equals card value requested */
-	{
-	  deck_push(deck, pop_back_of_list(node->list_of_objects)); /* transfer card from tree to deck */
-	  card_assigned = true;
-	  ++card_counter;
-	}
-	
-	if(0 == (++increment_counter % rand_help_increment_frequency))
-	{
-	  ++rand_help;
-	}
-	
-	if(16 < rand_help)
-	  rand_help = 2;
-	
+        tree_node_t * node = get_node(card_tree, random_card_value);
+            
+        if(0 < node->list_of_objects->size) /* Verify node key equals card value requested */
+        {
+          deck_push(deck, pop_back_of_list(node->list_of_objects)); /* transfer card from tree to deck */
+          card_assigned = true;
+          ++card_counter;
+        }
+        
+        if(0 == (++increment_counter % rand_help_increment_frequency))
+        {
+          ++rand_help;
+        }
+        
+        if(16 < rand_help)
+          rand_help = 2;
+        
       } while (false == card_assigned);
 
     }
@@ -111,9 +111,9 @@ deck_cipher_encryption(tree_t* card_tree, crypto_deck_t* crypto, deck_t* deck)
 
 crypto_t*
 initialize_stream_cipher(char (*encryption_algo)(char, crypto_t*),
-			 char (*decryption_algo)(char, crypto_t*),
-			 keystream_generator* keygen)
-		
+                         char (*decryption_algo)(char, crypto_t*),
+                         keystream_generator* keygen)
+                
 {  
   crypto_t* crypto = malloc(sizeof(crypto_t));
 
@@ -129,7 +129,7 @@ initialize_stream_cipher(char (*encryption_algo)(char, crypto_t*),
 
 crypto_deck_t*
 initialize_block_cipher(void (*encryption_algo)(tree_t*, crypto_deck_t*, deck_t*),
-		       keystream_generator* keygen)
+                       keystream_generator* keygen)
 {
   crypto_deck_t* crypto = malloc(sizeof(crypto_deck_t));
   crypto->key_stream = (*keygen->generator)(keygen->seed, keygen->length);
@@ -288,10 +288,10 @@ stream_cipher_decryption_ascii(char cipher_char, crypto_t* crypto)
   else if(isupper(cipher_char))
   {
     int shift_amount = crypto->key_stream[crypto->feedback.counter++ % 8];
-    int cchar_distance_from_a = cipher_char - 'a'; /* i.e. position in alphabet 0-25 */
+    int cchar_distance_from_a = cipher_char - 'A'; /* i.e. position in alphabet 0-25 */
     int shifted_cchar_distance_from_z = 25 - (cchar_distance_from_a - shift_amount);
     int distance_from_z = shifted_cchar_distance_from_z % 26;
-    decrypted_char = 'z' - distance_from_z;
+    decrypted_char = 'Z' - distance_from_z;
   }
 
   return decrypted_char;  
