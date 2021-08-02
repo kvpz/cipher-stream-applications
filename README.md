@@ -9,6 +9,8 @@ The code that makes up the ciphersuite uses some keywords for variable and struc
 
 ## A Quick Lesson on Cryptography
 
+coming soon, eventually
+
 ## Text encryptor program
 ![](/images/encryptor.png)
 ![](/images/encryptor-1.png)
